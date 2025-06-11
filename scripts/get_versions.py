@@ -1,11 +1,13 @@
 import requests
 import json
+import pandas as pd
+import matplotlib.pyplot as plt
 
 REPOS = [
     "prometheus/prometheus",
     "grafana/loki",
     "kubernetes/kubernetes",
-    "ingress-nginx/ingress-nginx",
+    "kubernetes/ingress-nginxdfs",
     "wal-g/wal-g",
     "argoproj/argo-cd",
     "prometheus/node_exporter",
@@ -20,13 +22,24 @@ def get_latest_version(repo):
         return response.json()["tag_name"]
     return "N/A"
 
-table = "| Программа          | Версия     |\n|--------------------|------------|\n" #18
+table = []
 for repo in REPOS:
     name = repo.split("/")[-1]
     version = get_latest_version(repo)
-    lenname = 18 - len(name)
-    lenversion = 8 - len(version)
-    table += f"| {name} {" " * lenname}| {version} {" " * lenversion }  |\n"
+    table.append({'Программа': name, 'Версия': version})
 
-with open('README.md', 'w') as file:
-    file.write(table)
+df = pd.DataFrame(table)
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.axis('off')
+table = ax.table(cellText=df.values,
+                 colLabels=df.columns,
+                 loc='center',
+                 cellLoc='center')
+table.auto_set_font_size(False)
+table.set_fontsize(12)
+table.scale(1.2, 1.2)
+plt.tight_layout()
+
+plt.savefig('output.png', dpi=300, bbox_inches='tight')
+plt.show()
