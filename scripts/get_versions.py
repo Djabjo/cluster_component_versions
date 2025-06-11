@@ -7,7 +7,7 @@ REPOS = [
     "prometheus/prometheus",
     "grafana/loki",
     "kubernetes/kubernetes",
-    "kubernetes/ingress-nginxdfs",
+    "kubernetes/ingress-nginx",
     "wal-g/wal-g",
     "argoproj/argo-cd",
     "prometheus/node_exporter",
@@ -26,7 +26,7 @@ table = []
 for repo in REPOS:
     name = repo.split("/")[-1]
     version = get_latest_version(repo)
-    table.append({'component': name, 'version': version})
+    table.append({'Component': name, 'Version': version})
 
 df = pd.DataFrame(table)
 
@@ -42,4 +42,4 @@ table.scale(1.2, 1.2)
 plt.tight_layout()
 
 plt.savefig('output.png', dpi=300, bbox_inches='tight')
-plt.show()
+# plt.show()
