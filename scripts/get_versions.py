@@ -30,16 +30,24 @@ for repo in REPOS:
 
 df = pd.DataFrame(table)
 
-fig, ax = plt.subplots(figsize=(8, 4))
+fig, ax = plt.subplots(figsize=(6, 4))
 ax.axis('off')
 table = ax.table(cellText=df.values,
-                 colLabels=df.columns,
+                 colLabels=df.columns,     
                  loc='center',
                  cellLoc='center')
 table.auto_set_font_size(False)
-table.set_fontsize(12)
+table.set_fontsize(14)
 table.scale(1.2, 1.2)
-plt.tight_layout()
+fig.subplots_adjust(top=1, bottom=0)  
+plt.tight_layout(pad=0)
 
-plt.savefig('output.png', dpi=300, bbox_inches='tight')
-# plt.show()
+
+plt.gca().set_axis_off()  # Отключаем оси
+plt.margins(0,0)
+plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+
+
+plt.savefig('output.png', dpi=400, bbox_inches='tight', pad_inches=0)
+# plt.show() , pad_inches=0
