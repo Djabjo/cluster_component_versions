@@ -26,7 +26,7 @@ table = []
 for repo in REPOS:
     name = repo.split("/")[-1]
     version = get_latest_version(repo)
-    table.append({'Программа': name, 'Версия': version})
+    table.append({'component': name, 'version': version})
 
 df = pd.DataFrame(table)
 
